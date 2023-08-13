@@ -36,11 +36,10 @@ def get_colors(msg):
     return json.loads(colors);
 
 app = Flask(__name__,
-            template_folder='templates'
+            template_folder='templates',
+            static_url_path='',
+            static_folder='static'
             )
-
-
-
 
 @app.route("/palette", methods=["POST"])
 def prompt_to_palette():
@@ -50,12 +49,7 @@ def prompt_to_palette():
 
 @app.route("/")
 def index():
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt="Give me a funny word: "
-    )
-    print(response["choices"][0]["text"])
-    return response["choices"][0]["text"]
+    return render_template("index.html")
 
 if __name__ == "__main__":
     app.run(port=8000, debug=True)
