@@ -27,20 +27,20 @@ const getColors = () => {
 
 const createColorBlocks = (colors, parent) => {
     parent.innerHTML = "";
-        for (const color of colors) {
-            const div = document.createElement("div");
-            div.classList.add("color");
-            div.style.backgroundColor = color;
-            div.style.width = `calc(100%/ ${colors.length})`
-            
-            div.addEventListener("click", function() {
-                navigator.clipboard.writeText(color);
-            })
+    for (const color of colors) {
+        const div = document.createElement("div");
+        div.classList.add("color");
+        div.style.backgroundColor = color;
+        div.style.width = `calc(100%/ ${colors.length})`
+        
+        div.addEventListener("click", function() {
+            navigator.clipboard.writeText(color);
+        })
 
-            const span = document.createElement("span");
-            span.innerText = color;
-            div.appendChild(span)
+        const span = document.createElement("span");
+        span.innerText = color;
+        div.appendChild(span)
 
-            parent.appendChild(div)
-        }
+        parent.appendChild(div)
+    }
 }

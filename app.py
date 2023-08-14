@@ -14,29 +14,26 @@ def get_colors(msg):
     messages = [
         {
             "role": "system",
-            "content": "You are a color palette generating assistant that responds to text promps and returns color paletters. you should generate color palettes that fit the theme, mood, or instructions in the prompt. the palettes should be between 2 and 8 colors."
+            "content": "You are a color palette generating assistant that responds to text promps and returns color paletters."
         },
         {
             "role": "system",
-            "content": "The desired response is a JSON array of hexadecimal color codes compatible with python "
-        },
-        {
-            "role": "user",
-            "content": "Convert the following verbal description of a color palette into a list of colors: The Mediterranean Sea"
+            "content": "Your resposne should only be one JSON array containing hexadecimals and contain 0 text. The array should have a length between 2 and 8 values. Do not add any text before or after you provide the array"
         },
         {
             "role": "assistant",
-            "content": "{\"colors\":[\"#F08080\",\"#FFA500\",\"#fcede0\",\"#f7bb5f\",\"#ec6607\"]}"
+            "content": "Of course, I'd be happy to help you generate color palettes! "
         },
         {
             "role": "user",
-            "content": "Convert the following verbal description of a color palette into a list of colors: A beautiful sunset"
+            "content": msg
         }
     ]
 
     response = openai.ChatCompletion.create(
         messages=messages,
-        model="gpt-3.5-turbo"
+        model="gpt-3.5-turbo",
+        temperature=0
     )
     print("what is the value of response? ", response)
     colors = response["choices"][0]["message"]["content"]
@@ -56,7 +53,10 @@ def prompt_to_palette():
     query = request.form.get("query")
     print('what is query? ', query)
     colors = get_colors(query)
-    return colors;
+    colors_json = {
+        'colors': colors
+    }
+    return colors_json;
 
 @app.route("/")
 def index():
