@@ -5,6 +5,7 @@ form.addEventListener("submit", function(e) {
 })
 
 const getColors = () => {
+    console.log('into get colors')
     const query = form.elements.query.value;
     fetch("/palette", {
         method: "POST",
@@ -18,6 +19,7 @@ const getColors = () => {
     .then((response) => response.json())
     .then((data) => {
         const colors = data.colors;
+        console.log('what is the value of returned colors? ', colors)
         const container = document.querySelector(".container");
         createColorBlocks(colors, container);
     })
